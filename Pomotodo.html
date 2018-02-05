@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pomotodo</title>
+    <style>
+        @keyframes spin {
+            to {
+                transform: rotate(1turn);
+            }
+        }
+
+        * {
+            margin:0;
+            padding:0;
+        }
+
+        body {
+            background:rgba(241,96,77,100);
+            font-family:Helvetica, Arial, sans-serif;;
+        }
+
+        h1 {
+            font-family: Lobster,Monospace;
+            font-size:60px;
+            color:#FFFFFF;
+            margin:40px auto;
+            text-align: center;
+            letter-spacing: 0.1rem;
+        }
+
+        #clock {
+            width:250px;
+            height:250px;
+            border:3px solid #FFFFFF;
+            border-radius:50%;
+            margin: 10px auto;
+            z-index: 2;
+            display: flex;
+        }
+
+        h2 {
+            font-size:50px;
+            font-weight:lighter;
+            color:#FFFFFF;
+            align-self:center;
+            margin:0 auto;
+            padding-top:40px;
+            text-align:center;
+        }
+
+        #dot {
+            width:16px;
+            height:16px;
+            border:3px solid #fff;
+            border-radius:50%;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            background:#F1604D ;
+            position:absolute;
+            left:50%;
+            margin-left:-8px;
+            margin-top:-8px;
+        }
+
+        div.run {
+            animation:spin 1 linear;
+            transform-origin: 50% 136px;
+            animation-play-state:running;
+            -webkit-animation-play-state:running;
+        }
+
+        div.stop {
+            animation:spin 1 linear;
+            transform-origin: 50% 136px;
+            animation-play-state:paused;
+            -webkit-animation-play-state:paused;
+        }
+
+        #setting {
+            justify-content: center;
+        }
+
+        span,p {
+            display:inline;
+            margin:0 5px;
+            line-height:20px;
+            color:#fff;
+            font-size:15px;
+        }
+
+        input[type="range"] {
+            width:200px;
+        }
+
+        .justify {
+            display:flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .vertical {
+            display:flex;
+            flex-direction:column;
+            margin:40px 20px;
+        }
+
+        #end {
+            height:30px;
+            width:300px;
+            font-size:15px;
+            border-radius:15px;
+            border:1px solid #7B7B7B;
+            margin:0 auto;
+            display:block;
+            background:white;
+        }
+
+        footer {
+            position: absolute;
+            bottom:0;
+            background:#FFFFFF;
+            color:#7B7B7B;
+            width:100%;
+            height:30px;
+            font-size: 18px;
+            line-height:30px;
+            text-align:center;
+        }
+
+        footer a {
+            color:#E06955;
+        }
+    </style>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.4/css/all.css" >
+    <link rel="stylesheet" href="https://fonts.gdgdocs.org/css?family=Lobster" >
+    <script type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+</head>
+<body>
+<h1>Seize the day</h1>
+<div id="clock" class="work">
+    <h2 id="time" style="z-index:-1">25:00 <br><span><i class="fas fa-play fa-2x"></i></span></h2>
+    <div id="dot"></div>
+</div>
+<div id="setting" class="justify">
+    <div id="setWork" class="vertical">
+        <input id="work" type="range" defaultValue="25" min="5" max="60" step="1">
+        <div class="justify">
+            <p>工作时间： </p>
+            <span id="worktime">25</span>
+            <p>min</p>
+        </div>
+    </div>
+    <div id="setRest" class="vertical">
+        <input id="rest" type="range" value="5" min="1" max="15" >
+        <div class="justify">
+            <p>休息时间: </p>
+            <span id="resttime">5</span>
+            <p>min</p>
+        </div>
+    </div>
+</div>
+<button id="end" type="button">结束番茄</button>
+<footer>Coded by <a href="https://codepen.io/nikkkki/">Xu Quan</a></footer>
+<script>
+    var sentence=[
+        "Good for you!",
+        "You have done a great job!",
+        "You have reached your goal!",
+        "Take a rest!",
+        "Bravo!",
+        "Well done!"
+    ];
+
+    $("#dot").css("top",$("#clock").offset().top+"px");
+
+    $("#work").on("input change",function() {
+        $("#worktime").html($("#work").val());
+        if($("#clock").hasClass("work")) {
+            $("#time").html(numToTime($("#work").val())+"<br><span><i class=\"fas fa-play fa-2x\"></i></span>");
+        }
+    });
+
+    $("#rest").on("input change",function() {
+        $("#resttime").html($("#rest").val());
+        if(!$("#clock").hasClass("work")) {
+            $("#time").html(numToTime($("#rest").val())+"<br><span><i class=\"fas fa-play fa-2x\"></i></span>");
+        }
+    });
+
+    var timer=null;
+    $("#clock").on("click",function() {
+        var secTime=getSec($("#time").text())-1;
+        $("input[type='range']").attr("disabled","disabled");
+        if (!$("#dot").hasClass("run")){
+            $("#time").html(secToTime(secTime)+'<br><span><i class="fas fa-pause fa-2x"></i></span>');
+            $("#dot").addClass("run").removeClass("stop");
+            timer=setInterval(function(){
+                secTime=secTime-1;
+                $("#dot").css("animation-duration",secTime+"s");
+                if(secTime<0){
+                    clearInterval(timer);
+                    $("input[type='range']").removeAttr("disabled");
+                    $("#dot").removeClass("run").addClass("stop");
+                    if($("#clock").hasClass("work")){
+                        alert(sentence[Math.floor(Math.random()*(sentence.length))]);
+                    }
+                    $("#clock").toggleClass("work");
+                }
+                $("#time").html(secToTime(secTime)+'<br><span><i class="fas fa-pause fa-2x"></i></span>');
+            },1000)
+        } else {
+            $("#dot").removeClass("run").addClass("stop");
+            clearInterval(timer);
+            $("i").toggleClass("fa-pause").toggleClass("fa-play");
+        }
+    });
+
+    $("#end").on("click",function() {
+        clearInterval(timer);
+        $("#dot").removeClass("run");
+        $("input[type='range']").removeAttr("disabled");
+        $("#clock").addClass("work");
+        $("#time").html(numToTime($("#worktime").text())+"<br><span><i class=\"fas fa-play fa-2x\"></i></span>");
+    })
+
+    function getSec(str) {
+        var min=parseInt(str.substr(0,2));
+        var sec=parseInt(str.substr(3,2));
+        return min*60+sec;
+    }
+
+    function numToTime(num) {
+        var str;
+        if(num>9){
+            str=num+":00";
+        } else{
+            str="0"+num+":00";
+        } return str;
+    }
+
+    function secToTime(num) {
+        var str="";
+        var min=Math.floor(num/60);
+        min=min>9?min:("0"+min);
+        var sec=num%60;
+        sec=sec>9?sec:("0"+sec);
+        return str=min+":"+sec;
+    }
+</script>
+</body>
+</html>

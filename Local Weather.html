@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Local Weather</title>
+    <style>
+        body {
+            background:#FBFBFB;
+            font-family: Helvetica, Arial, sans-serif;
+            color:#323132;
+        }
+
+        #container {
+            background-image: url("http://m.qpic.cn/psb?/V14NviVs2GUqjk/wwF4BdnP.MKgLXli0vTXharR31CivYFkFcQzDkrzS*8!/b/dGcBAAAAAAAA&bo=uAEOAwAAAAARB4Q!&rf=viewer_4");
+            background-size: 100px;
+            background-repeat: repeat;
+            width:550px;
+            height:330px;
+            margin:150px auto;
+            -webkit-box-shadow: 1px 2px 3px  #E7E5E6;
+            -moz-box-shadow:1px 2px 3px  #E7E5E6;
+            box-shadow: 1px 2px 3px  #E7E5E6;
+            border-radius:10px;
+            border:1px solid #E3E3E3;
+            display:flex;
+            justify-content: space-around;
+        }
+
+        #searchbar {
+            position:absolute;
+            top:120px;
+            left: 750px;
+        }
+
+        #location {
+            align-self:center;
+        }
+
+        #location h1 {
+            font-size: 2.3em;
+            line-height: 1.5em;
+        }
+
+        #location h4 {
+            line-height:0.3em;
+            font-style:italic;
+        }
+
+        #weather {
+            align-self:center;
+        }
+
+        #header {
+            display:flex;
+            align-items:flex-start;
+            margin-left:-10px;
+            margin-top:-20px;
+        }
+
+        #header h3 {
+            line-height:40px;
+            margin-left:8px;
+            font-size:20px;
+        }
+
+        #weather h4 {
+            font-weight:normal;
+            margin-left:10px;
+            margin-top:-5px;
+            margin-bottom:10px;
+        }
+
+        table,th,td {
+            border:1px solid #323132;
+            border-collapse: collapse;
+            text-align:left;
+            font-weight:normal;
+            font-size:15px;
+        }
+
+        th {
+            text-transform: capitalize;
+            padding: 8px;
+        }
+
+        td {
+            width:120px;
+        }
+
+        tr:nth-child(even) {
+            background: #E3E3E3;
+        }
+
+        tr:nth-child(odd) {
+            background:white;
+        }
+    </style>
+    <script type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+</head>
+<body>
+<div id="searchbar">
+    <input type="text" name="city" id="cityName" />
+    <input type="submit" value="search" id="submit" />
+</div>
+<div id="container">
+    <div id="location">
+        <h1></h1>
+        <h4 id="latitude">Latitude:  </h4>
+        <h4 id="longitude">Longitude:  </h4>
+    </div>
+    <div id="weather">
+        <div id="header">
+            <img id="icon" src=""/>
+            <h3 style='display:inline;'>-6.0<sup>o</sup>C</h3>
+        </div>
+        <h4 id="description">Weather: </h4>
+        <table>
+            <tr>
+                <th>Wind Speed</th>
+                <td id="wind"></td>
+            </tr>
+            <tr>
+                <th>cloudiness</th>
+                <td id="clouds"></td>
+            </tr>
+            <tr>
+                <th>pressure</th>
+                <td id="pressure"></td>
+            </tr>
+            <tr>
+                <th>humidity</th>
+                <td id="humidity"></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<script>
+    $("#submit").on("click",function() {
+        getCityWeather($("#cityName").val());
+        $('#cityName').val("");
+    })
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            var lat=position.coords.latitude;
+            var lon=position.coords.longitude;
+
+            if(lat>0) {
+                $('#latitude').html("Latitude: " + lat.toFixed(1) + "<sup>o</sup> N");
+            } else {
+                $('#latitude').html("Latitude: " + lat.toFixed(1) + "<sup>o</sup> S");
+            }
+            if(lon>0) {
+                $('#longitude').html("Longitude: " + lon.toFixed(1) + "<sup>o</sup> E");
+            } else {
+                $('#longitude').html("Longitude: " + lon.toFixed(1) + "<sup>o</sup> W");
+            }
+            getWeather(lat,lon);
+        });
+    }
+
+    function getWeather(lat,lon) {
+        $.ajax({
+            url:"http://api.openweathermap.org/data/2.5/weather?lat="+lat+"&lon="+lon+"&APPID=0ea9f04bbd5aec20a2c536efb790f2bc",
+            dataType:"json",
+            success:function(data) {
+                $("h1").html(data.name);
+                $('#icon').attr({"src":"http://openweathermap.org/img/w/"+data.weather[0].icon+".png",'width':80,'height':80});
+                $('h3').html((data.main.temp-273.15).toFixed(1)+"<sup>o</sup>C");
+                $("#description").html("Weather: "+data.weather[0].main);
+                $("#wind").html("&nbsp;"+data.wind.speed*3.6+" miles/h");
+                $("#clouds").html("&nbsp;"+data.clouds.all+"%");
+                $("#pressure").html("&nbsp;"+data.main.pressure+" pHa");
+                $("#humidity").html("&nbsp;"+data.main.humidity+"%");
+            }
+        })
+    }
+
+    function getCityWeather(name) {
+        $.ajax({
+            url: "http://api.openweathermap.org/data/2.5/weather?q=" + name + "&APPID=0ea9f04bbd5aec20a2c536efb790f2bc",
+            dataType: "json",
+            success: function (data) {
+                getWeather(data.coord.lat,data.coord.lon);
+                $('#latitude').html("Not supported.");
+                $('#longitude').html("Not supported.");
+            }
+        })
+    }
+
+</script>
+</body>
+</html>

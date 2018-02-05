@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Wiki Viewer</title>
+    <style>
+        html, .container-fluid {
+            background:#004454;
+        }
+
+        .container-fluid h1 {
+            color:white;
+            font-size: 50px;
+            font-family:Lobster, Monospace;
+            line-height:70px;
+            margin:200px auto 40px;
+            text-align:center;
+            background-image: -webkit-gradient(linear, 0 0, 0 bottom, from(#F0F0F0), to(#D4D4D2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        #text {
+            border-radius:15px;
+            border: 3px solid #D96F32;
+            width:400px;
+            height: 34px;
+        }
+
+        #new {
+            margin-top:20px;
+            margin-bottom:20px;
+            display:none;
+        }
+
+        #content {
+            border:1px solid white;
+            max-height:400px;
+            overflow:auto;
+            margin-bottom:20px;
+            -webkit-box-shadow: 1px 2px 3px  #E7E5E6;
+            -moz-box-shadow:1px 2px 3px  #E7E5E6;
+            box-shadow: 1px 2px 3px  #E7E5E6;
+            border-radius:15px;
+            display:none;
+        }
+
+        .item {
+            margin:20px auto;
+            font-size:13px;
+            line-height:20px;
+            width:100%;
+            max-height:120px;
+            overflow: hidden;
+            color:#333333;
+            background:white;
+            padding:2px 15px;
+        }
+
+        .item:hover {
+            border-left:2px solid #D96F32;
+        }
+    </style>
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.1/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.4/css/all.css" >
+    <link rel="stylesheet" href="https://fonts.gdgdocs.org/css?family=Lobster" >
+    <script type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+</head>
+<body>
+<div class="container-fluid">
+    <h1>Know more about the world <br>via Wikipedia.</h1>
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="row">
+                <div class="col-md-5 col-md-offset-1" id="randomQuote">
+                    <button class="btn btn-block"><i class="fa fa-paper-plane"></i>&nbsp;Get a random article</button>
+                </div>
+                <div id='search' class="col-md-5 ">
+                    <button class="btn btn-block"><i class="fas fa-binoculars fa-lg"></i>&nbsp;Search something else</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="row" id="new">
+                <div class="col-md-7 col-md-offset-1">
+                    <input type="text" id="text" style="margin-top:4px" />
+                </div>
+                <div class="col-md-3">
+                    <button class="btn btn-block" id="searchWiki"><i class="fa fa-search"></i>&nbsp;Click to search</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1" id="content">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $("#randomQuote").on('click',function() {
+        open("http://en.wikipedia.org/wiki/Special:Random");
+    });
+
+    $('#search').on('click',function() {
+        $('#new').attr('style','display:block');
+    });
+
+    $('#searchWiki').on('click',function() {
+        searchWiki($('#text').val());
+    });
+
+    $('#text').bind('keydown',function(e) {
+        if(e.which==13){
+            searchWiki($('#text').val());
+        }
+    })
+
+    function searchWiki(text) {
+        var re=text.replace(" ","_");
+        $.ajax({
+            url:"https://en.wikipedia.org/w/api.php?format=json&action=query&generator=search&gsrnamespace=0&gsrlimit=10&prop=pageimages|extracts&pilimit=max&exintro&explaintext&exsentences=1&exlimit=max&gsrsearch="+re+'&callback=JSON_CALLBACK',
+            dataType:'jsonp',
+            success:function(data){
+                $('#content').html('');
+                $('#text').val("");
+                $('#content').attr('style','display:block');
+                if(!data.hasOwnProperty("query")){
+                    $('#content').append("<div class='item'><h5>Nothing can be found. Try another object.</h5></div>")
+                } else {
+                    var results=data.query.pages;
+                    $('.container-fluid h1').attr('style','margin:20px auto');
+                    for(var key in results){
+                        $('#content').append("<a href='https://en.wikipedia.org/wiki/"+results[key].title+"' target='_blank'><div class='item'><h4>"+results[key].title+"</h4><p>"+results[key].extract+"</p></div></a>")
+                    }
+                }
+            }
+        })
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<!--suppress ALL -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tic Tac Toe Game</title>
+    <style>
+        @keyframes twinkling {
+            0% {
+                opacity:0.3;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        * {
+            margin:0;
+            padding:0;
+            width:100%;
+        }
+
+        body {
+            background:#14BDAC;
+            font-family:Arial, sans-serif;
+        }
+
+        #msgBegin {
+            width:50%;
+            height:350px;
+            border:1px solid #7B7B7B;
+            border-radius:20px;
+            background:#F0F0F0;
+            box-sizing: border-box;
+            -webkit-box-shadow: 2px 2px 2px #7B7B7B;
+            -moz-box-shadow: 2px 2px 2px #7B7B7B;
+            box-shadow: 2px 2px 2px #7B7B7B;
+            position:absolute;
+            top:100px;
+            left:25%;
+        }
+
+        #msgBegin h1 {
+            text-align:center;
+            border-radius:20px;
+            padding-top:130px;
+            font-size:30px;
+        }
+
+        hr {
+            margin:40px auto 30px;
+        }
+
+        .choice {
+            text-align:center;
+        }
+
+        .choice p {
+            font-size: 20px;
+            display:inline;
+            vertical-align: middle;
+            margin-right:50px
+        }
+
+        .choice button {
+            width:35px;
+            height:35px;
+            background:#14BDAC;
+            font-size:20px;
+            border-radius:6px;
+            display:inline;
+            margin:-5px 4px;
+            vertical-align: middle;
+        }
+
+        #board {
+            width:420px;
+            height:420px;
+            margin:60px auto;
+            display:flex;
+            flex-wrap:wrap;
+        }
+
+        #board div {
+            width:140px;
+            height:140px;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            font-size:50px;
+        }
+
+        .twinkling {
+            -webkit-animation: twinkling 1s infinite ease-in-out;
+            -o-animation: twinkling 1s infinite ease-in-out;
+            animation: twinkling 1s infinite ease-in-out;
+        }
+
+        #board div.top {
+            border-bottom:6px solid #0DA192;
+        }
+
+        #board div.bottom {
+            border-top:6px solid #0DA192;
+        }
+
+        #board div.left {
+            border-right:6px solid #0DA192;
+        }
+
+        #board div.right {
+            border-left:6px solid #0DA192;
+        }
+
+        #board div i {
+            font-size:70px;
+            text-align:center;
+            line-height:140px;
+        }
+
+        #board div.player i {
+            color:#F2EBD3;
+        }
+
+        #board div.computer i  {
+            color:#545454;
+        }
+
+        #restart {
+            width:300px;
+            height:40px;
+            border-radius:10px;
+            border:1px solid #545454;
+            background:#F0F0F0;
+            display:block;
+            margin:-20px auto;
+            font-size:13px;
+        }
+
+        #note {
+            width:20%;
+            height:150px;
+            position:absolute;
+            top:200px;
+            left:40%;
+            background:rgba(235,235,235,0.8);
+            border:1px solid black;
+            border-radius:20px;
+            text-align:center;
+            display:none;
+        }
+
+        #note h2 {
+            line-height:150px;
+        }
+
+        footer {
+            position:absolute;
+            bottom:0;
+            background:#F0F0F0;
+            text-align:center;
+            height:30px;
+            line-height:30px;
+        }
+
+        footer a {
+            text-decoration: none;
+        }
+    </style>
+    <link href="https://use.fontawesome.com/releases/v5.0.4/css/all.css" rel="stylesheet">
+    <script type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+</head>
+<body>
+<div id="msgBegin">
+    <h1>Welcome to Tic Tac Game!</h1><hr>
+    <div class="choice">
+        <p>Which one do you want?</p>
+        <button type="button" id="x">x</button>
+        <button type="button" id="o">o</button>
+    </div>
+</div>
+<div id="board">
+    <div class="top left"></div>
+    <div class="top middle"></div>
+    <div class="top right"></div>
+    <div class="mid left"></div>
+    <div class="mid middle"></div>
+    <div class="mid right"></div>
+    <div class="bottom left"></div>
+    <div class="bottom middle"></div>
+    <div class="bottom right"></div>
+</div>
+<div id="note">
+    <h2>You win!</h2>
+</div>
+<button id="restart" type="button" class="btn btn-block btn-default">重新开始游戏</button>
+<footer>Coded by <a href="https://codepen.io/nikkkki/">Xu Quan</a></footer>
+
+<script>
+    var huPlayer;
+    var computer;
+    var playerIcon="";
+    var computerIcon="";
+    var playBoard=$("#board").find("div");
+    var boardIndex;
+    const winLines = [
+        [0,1,2],
+        [3,4,5],
+        [6,7,8],
+        [0,3,6],
+        [1,4,7],
+        [2,5,8],
+        [0,4,8],
+        [2,4,6]
+    ];
+
+    $("hr").css("width",$("#msgBegin").innerWidth()-100+"px");
+
+    $(".choice").find("button").on("click",function() {
+        $("#msgBegin").css("display","none");
+        if ($(this).attr("id") === "x") {
+            huPlayer = "x";
+            computer = "o";
+            playerIcon = "<i class='fas fa-times'></i>";
+            computerIcon = "<i class='far fa-circle'></i>";
+        } else {
+            huPlayer = "o";
+            computer = "x";
+            playerIcon = "<i class='far fa-circle'></i>";
+            computerIcon = "<i class='fas fa-times'></i>";
+        }
+        startGame();
+    });
+
+    $("#restart").on("click",function(){
+        startGame();
+    });
+
+    function startGame() {
+        $("#note").css("display","none");
+        boardIndex=Array.from(Array(9).keys());
+        playBoard.each(function(index) {
+            $(this).html("").removeClass("computer player twinkling");
+            $(this).on("click", function () {
+                turnClick(index, huPlayer);
+                checkWin(boardIndex,huPlayer);
+                if(!checkWin(boardIndex,huPlayer)&&!checkTie()){
+                    var divIndex=decidePlay();
+                    turnClick(divIndex,computer);
+                    checkTie();
+                }
+            });
+        });
+    }
+
+    function turnClick(divIndex,player) {
+        boardIndex[divIndex]=player;
+        var playerContent="";
+        var playerClass="";
+        if(player===huPlayer) {
+            playerContent=playerIcon;
+            playerClass="player";
+        } else {
+            playerContent=computerIcon;
+            playerClass="computer";
+        }
+        playBoard.eq(divIndex).html(playerContent).addClass(playerClass);
+        var gameWon=checkWin(boardIndex,player);
+        if(gameWon) gameOver(gameWon);
+    }
+
+    function checkWin(board,player) {
+        var plays=jQuery.map(board,function(value,index) {
+            if(player === value) {
+                return index;
+            }
+        })
+
+        var result=jQuery.map(winLines,function(value,index) {
+            if(checkPlay(plays,value) === 3) {
+                return index;
+            }
+        })
+
+        if(result.length!==0) {
+            return gameWon={index:result,player:player};
+        }
+    }
+
+    function checkPlay(playList,winList) {
+        var result=0;
+        for(var i=0;i<4;i++) {
+            if(playList.indexOf(winList[i])>-1) {
+                result+=1;
+            }
+        }
+        return result;
+    }
+
+    function gameOver(gameWon) {
+        var text="";
+        if(gameWon.player===huPlayer) {
+            text="You win!";
+            $("#board").addClass("playerWin");
+        } else {
+            text="You lose.";
+            $("#board").removeClass("playerWin");
+        }
+        for(var i=0;i<gameWon.index.length;i++) {
+            var line=winLines[gameWon.index[i]];
+            for(var j=0;j<4;j++){
+                playBoard.eq(line[j]).addClass("twinkling");
+            }
+        }
+        playBoard.off("click");
+        $("#note").find("h2").text(text);
+        $("#note").css("display","block");
+    }
+
+    function checkTie(){
+        if(emptyCells(boardIndex).length===0) {
+            playBoard.each(function() {
+                $(this).off("click");
+            })
+            $("#note").find("h2").text("Tie Game!");
+            $("#note").css("display","block");
+        }
+    }
+
+    function emptyCells(board) {
+        return jQuery.grep(board,function(n) {
+            return n<10;
+        })
+    }
+
+    function decidePlay() {
+        var bestMove;
+        var comPlays=jQuery.map(boardIndex,function (value,index) {
+            if(value === computer) {
+                return index;
+            }
+        })
+        var huPlays=jQuery.map(boardIndex,function(value,index) {
+            if(value === huPlayer) {
+                return index;
+            }
+        })
+        var checkCom=jQuery.map(winLines,function(value) {
+            return checkPlay(comPlays,value);
+        })
+        var checkHu=jQuery.map(winLines,function (value) {
+            return checkPlay(huPlays,value);
+        })
+        if(Math.max.apply(null,checkCom)===2){
+            var last=jQuery.grep(winLines[checkCom.indexOf(2)],function(value){
+                return jQuery.type(boardIndex[value])=="number";
+            });
+        } else if(Math.max.apply(null,checkHu)===2){
+            var last=jQuery.grep(winLines[checkHu.indexOf(2)],function(value){
+                return jQuery.type(boardIndex[value])=="number";
+            });
+        }
+        if(last===undefined || last.length===0){
+            bestMove=emptyCells(boardIndex)[Math.floor(Math.random()*emptyCells(boardIndex).length)];
+        } else if(last.length===1) {
+            bestMove=last[0];
+        }
+        return bestMove;
+    }
+
+</script>
+</body>
+</html>

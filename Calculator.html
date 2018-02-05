@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Calculator</title>
+    <style>
+        body {
+            background:#D4D4D2;
+        }
+
+        #calculator {
+            width:350px;
+            height: 550px;
+            background:black;
+            border-radius: 50px;
+            margin: 20px auto;
+            display:flex;
+            align-items: flex-end;
+            justify-content:flex-end;
+            flex-wrap:wrap;
+            flex-direction:column;
+            box-sizing:border-box;
+            font-family:Arial, sans-serif;
+            overflow:hidden;
+        }
+
+        h1 {
+            color:white;
+            font-size: 33px;
+            font-weight:normal;
+            margin-right: 13px;
+            margin-bottom:0;
+        }
+
+        #btns {
+            display:flex;
+            flex-wrap: wrap;
+            margin-left:19px;
+            margin-bottom: 15px;
+        }
+
+        button {
+            width: 70px;
+            height:70px;
+            border-radius:50%;
+            border:none;
+            display:flex;
+            justify-content:center;
+            font-size:30px;
+            margin:5px;
+        }
+
+        .symbol {
+            background:#A6A6A6;
+        }
+
+        .symbol:active {
+            background:#CACACA;
+        }
+
+        span {
+            font-size:24px;
+        }
+
+        sup {
+            position:relative;
+            top:1px;
+            left:1px;
+        }
+
+        .number {
+            background:#333333;
+            color:white;
+        }
+
+        .number:active {
+            background:#727272;
+        }
+
+        .cal:active {
+            background:#F1C089;
+        }
+
+        .cal {
+            background:#F19938;
+            color:white;
+            padding-bottom:4px;
+        }
+    </style>
+    <script type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+</head>
+<body>
+<div id="calculator">
+    <h1 id="answer"></h1>
+    <div id="btns">
+        <button id="btn" class="symbol" type="button" value="AC">AC</button>
+        <button class="symbol" value="+/-"><span><sup>+</sup></span>⁄<span><sub>-</sub></span></button>
+        <button class="symbol" value="%">%</button>
+        <button class="cal" value="/">&divide;</button>
+        <button class="number" value="7">7</button>
+        <button class="number" value="8">8</button>
+        <button class="number" value="9">9</button>
+        <button class="cal" value="*">&times;</button>
+        <button class="number" value="4">4</button>
+        <button class="number" value="5">5</button>
+        <button class="number" value="6">6</button>
+        <button class="cal" value="-">&minus;</button>
+        <button class="number" value="1">1</button>
+        <button class="number" value="2">2</button>
+        <button class="number" value="3">3</button>
+        <button class="cal" value="+">+</button>
+        <button style="width:150px;border-radius:35px;padding-right:90px;" class="number" value="0">0</button>
+        <button class="number" value=".">.</button>
+        <button class="cal" value="=">=</button>
+    </div>
+</div>
+<script>
+    var ans="";
+    var calc="";
+    var calcText="";
+
+    $(document).ready(function() {
+        $("button").on('click',function() {
+            var oText=$(this).attr("value");
+            if(parseInt(oText,10)==oText||oText===".") {
+                calc += oText;
+                calcText+=oText;
+                $('h1').text(calcText);
+            } else if(oText==="+"||oText==="-"||oText==="*"||oText==="/") {
+                calc+=oText;
+                $('h1').text(calcText);
+                calcText="";
+            } else if(oText==="AC") {
+                calc="";
+                calcText="";
+                $('h1').text(calcText);
+            } else if(oText==="+/-") {
+                if(calcText=="") {
+                    calcText+="-";
+                    calc+=calcText;
+                } else {
+                    calcText=eval(calcText)*-1;
+                    calc+="*-1";
+                }
+                $('h1').text(calcText);
+            } else if(oText==="%") {
+                calc+="/100";
+                calcText+=oText;
+                $('h1').text(calcText);
+            } else if(oText==="=") {
+                ans=eval(calc);
+                $('h1').text(ans);
+                calc="";
+                ans="";
+                calcText="";
+            }
+        })
+    })
+</script>
+</body>
+</html>
