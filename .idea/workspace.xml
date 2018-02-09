@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="39c73bfe-6636-43f4-88a8-6d9e296559fb" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/Calculator.html" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Local Weather.html" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Pomotodo.html" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Random Quote Machine.html" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Tic Tac Toe Game.html" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Wiki Viewer.html" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -33,11 +28,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="danmu.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="danmu.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/danmu.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2840">
-              <caret line="142" column="7" lean-forward="false" selection-start-line="142" selection-start-column="7" selection-end-line="142" selection-end-column="7" />
+            <state relative-caret-position="381">
+              <caret line="94" column="53" lean-forward="false" selection-start-line="94" selection-start-column="26" selection-end-line="94" selection-end-column="53" />
               <folding>
                 <marker date="1517822713922" expanded="true" signature="3586:3592" ph="..." />
               </folding>
@@ -87,8 +82,8 @@
       <file leaf-file-name="Random Quote Machine.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Random Quote Machine.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="542">
-              <caret line="118" column="7" lean-forward="false" selection-start-line="118" selection-start-column="7" selection-end-line="118" selection-end-column="7" />
+            <state relative-caret-position="216">
+              <caret line="74" column="64" lean-forward="false" selection-start-line="74" selection-start-column="25" selection-end-line="74" selection-end-column="64" />
               <folding />
             </state>
           </provider>
@@ -104,7 +99,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Wiki Viewer.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Wiki Viewer.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Wiki Viewer.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="542">
@@ -231,15 +226,16 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1517822166536</updated>
-      <workItem from="1517822167875" duration="670000" />
+      <workItem from="1517822167875" duration="1714000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="670000" />
+    <option name="totallyTimeSpent" value="1714000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="87" y="41" width="1440" height="804" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24947146" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -289,16 +285,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/danmu.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2840">
-          <caret line="142" column="7" lean-forward="false" selection-start-line="142" selection-start-column="7" selection-end-line="142" selection-end-column="7" />
-          <folding>
-            <marker date="1517822713922" expanded="true" signature="3586:3592" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Pomotodo.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="542">
@@ -332,14 +318,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Random Quote Machine.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="542">
-          <caret line="118" column="7" lean-forward="false" selection-start-line="118" selection-start-column="7" selection-end-line="118" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Tic Tac Toe Game.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="542">
@@ -357,6 +335,24 @@
             <element signature="e#2557#2563#0" expanded="true" />
             <element signature="n#style#0;n#input#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="e#3056#3062#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Random Quote Machine.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="74" column="64" lean-forward="false" selection-start-line="74" selection-start-column="25" selection-end-line="74" selection-end-column="64" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/danmu.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="381">
+          <caret line="94" column="53" lean-forward="false" selection-start-line="94" selection-start-column="26" selection-end-line="94" selection-end-column="53" />
+          <folding>
+            <marker date="1517822713922" expanded="true" signature="3586:3592" ph="..." />
           </folding>
         </state>
       </provider>

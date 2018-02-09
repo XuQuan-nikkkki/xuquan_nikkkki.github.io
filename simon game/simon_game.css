@@ -1,0 +1,294 @@
+@keyframes twinkling {
+	0% {
+		opacity: 0.1;
+	}
+	to 100% {
+		opacity :  1;
+	}
+}
+
+*
+{
+    font-family: Arial, sans-serif;
+
+    margin: 0;
+    padding: 0;
+
+    background-image: url('http://m.qpic.cn/psb?/V14NviVs2GUqjk/sWz4wc.*xHqw3HMxf*5.msg2y0oqSwFt1XYYsQrpMfI!/b/dGYBAAAAAAAA&bo=LAEsAQAAAAARBzA!&rf=viewer_4');
+    background-repeat: repeat;
+}
+
+.playBoard
+{
+    display: flex;
+
+    width: 500px;
+    height: 500px;
+    margin: 60px auto;
+
+    flex-wrap: wrap;
+}
+
+.quarter
+{
+    box-sizing: border-box;
+    width: 250px;
+    height: 250px;
+
+    border: 15px solid #333;
+}
+
+#green
+{
+    border-top: 30px solid #333;
+    border-left: 30px solid #333;
+    border-top-left-radius: 100%;
+    background: #139b38;
+}
+
+#green.clicked
+{
+	border-top: 30px solid #333;
+    border-left: 30px solid #333;
+    border-top-left-radius: 100%;
+    background: #13F338;
+}
+
+#red
+{
+    border-top: 30px solid #333;
+    border-right: 30px solid #333;
+    border-top-right-radius: 100%;
+    background: #8c0013;
+}
+
+#red.clicked
+{
+	border-top: 30px solid #333;
+    border-right: 30px solid #333;
+    border-top-right-radius: 100%;
+    background: #FF0013;
+}
+
+#yellow
+{
+    border-bottom: 30px solid #333;
+    border-left: 30px solid #333;
+    border-bottom-left-radius: 100%;
+    background: #c1980c;
+}
+
+#yellow.clicked
+{
+	border-bottom: 30px solid #333;
+    border-left: 30px solid #333;
+    border-bottom-left-radius: 100%;
+    background: #C1DC0C;
+}
+
+#blue
+{
+    border-right: 30px solid #333;
+    border-bottom: 30px solid #333;
+    border-bottom-right-radius: 100%;
+    background: #0d367c;
+}
+
+#blue.clicked
+{
+	border-right: 30px solid #333;
+    border-bottom: 30px solid #333;
+    border-bottom-right-radius: 100%;
+    background: #0D36FF;
+}
+
+div.dashboard
+{
+    position: absolute;
+    top: 185px;
+    left: 50%;
+
+    display: flex;
+    overflow: hidden;
+    flex-direction: column;
+
+    box-sizing: border-box;
+    width: 250px;
+    height: 250px;
+    margin-left: -125px;
+
+    border: 15px solid #333;
+    border-radius: 50%;
+
+    align-items: center;
+}
+
+.dashboard,
+.dashboard div
+{
+    background: #E7E1EB;
+}
+
+div.row {
+	justify-content: center;
+}
+
+#brand
+{
+    margin-top: 20px;
+}
+
+#brand h1,
+sup
+{
+    color: #333;
+    background: #E7E1EB;
+}
+
+#brand h1
+{
+    font-family: 'Titillium Web', sans-serif;
+    font-size: 60px;
+    font-weight: bolder;
+}
+
+#brand sup
+{
+    font-size: 15px;
+}
+
+div.row
+{
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+}
+
+span
+{
+    font-family: 'Teko', sans-serif;
+    font-size: 18px;
+
+    display: block;
+    text-transform: uppercase;
+    background: #E7E1EB;
+    margin:  0 5px;
+}
+
+button {
+	display: block;
+	margin:  0 10px;
+}
+
+div#countScreen
+{
+    width: 60px;
+    height: 35px;
+
+    border: 5px solid #333;
+    border-radius: 10px;
+    background: #25020b;
+
+    margin:  0 10px;
+    
+
+    overflow: hidden;
+}
+div#countScreen span{
+	background: #25020b;
+	color: #D10020;
+    line-height: 40px;
+    text-align: center;
+    font-family: 'Press Start 2P', cursive;
+}
+
+div#countScreen span.twinkling {
+	animation: twinkling 1s infinite ease-in-out;
+}
+
+button#start
+{
+    width: 25px;
+    height: 25px;
+
+    border: 4px solid #333;
+    border-radius: 50%;
+    background: #f90009;
+    box-shadow: 1px 1px 2px #333;
+}
+
+button#strict
+{
+    width: 25px;
+    height: 25px;
+
+    border: 4px solid #333;
+    border-radius: 50%;
+    background: #ffff08;
+    box-shadow: 1px 1px 2px #333;
+}
+
+button#strict_on {
+	width: 10px;
+	height: 10px;
+	border: 3px solid #333;
+	border-radius: 50%;
+	background: black;
+	position: absolute;
+}
+
+button#strict_on.on{
+	width: 10px;
+	height: 10px;
+	border: 3px solid #333;
+	border-radius: 50%;
+	background: #FF0013;
+	position: absolute;
+}
+
+
+div#on_off
+{
+    display: flex;
+}
+
+div#slider {
+	width: 40px;
+	height: 20px;
+	border: 2px solid #333;
+	border-radius: 10%;
+	background: #191919;
+	position: relative;
+}
+
+div#square {
+	width: 20px;
+	height: 20px;
+	border-radius: 20%;
+	background: #287ED6;
+	position: absolute;
+	left: 0px;
+}
+
+footer
+{
+    line-height: 30px;
+
+    position: absolute;
+    bottom: 0;
+
+    width: 100%;
+    height: 30px;
+
+    text-align: center;
+
+    color: #fff;
+    background: #000;
+}
+
+footer a
+{
+    color: #fff;
+    background: #000;
+}

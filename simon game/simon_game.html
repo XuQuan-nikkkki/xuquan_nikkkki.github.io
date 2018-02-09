@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Simon Game</title>
+	<link rel="stylesheet" type="text/css" href="simon_game.css" />
+	<link href="https://fonts.googleapis.com/css?family=Titillium+Web:900" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Teko" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+	<script type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+</head>
+<body>
+	<div class="playBoard">
+		<div class="quarter" id="green"></div>
+		<div class="quarter" id="red"></div>
+		<div class="quarter" id="yellow"></div>
+		<div class="quarter" id="blue"></div>
+	</div>
+	<div class="dashboard">
+		<div id="brand" class="row">
+			<h1>Simon<sup>&reg;</sup></h1>
+		</div>
+		<div  class="row" style="margin-left:50%">
+			<button id="strict_on" style="margin-top:-10px;"></button>
+		</div>
+		<div id="icons" class="row">
+			<div id="countScreen"><span></span></div>
+			<button id="start" type="button"></button>
+			<button id="strict" type="button"></button>
+		</div>
+		<div id="text" class="row">
+			<span style="margin:0 28px;">count</span>
+			<span>start</span>
+			<span>strict</span>
+		</div>
+		<div id="on_off" class="row">
+			<span>off</span>
+			<div id="slider">
+				<div id="square"></div>
+			</div>
+			<span>on</span>
+		</div>
+	</div>
+	
+	<footer>Coded by <a href="https://codepen.io/nikkkki/">Xu Quan</a></footer>
+	<script type="text/javascript" src="simon_game.js">
+		
+	</script>
+</body>
+</html>
